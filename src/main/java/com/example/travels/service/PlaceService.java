@@ -9,4 +9,6 @@ public interface PlaceService {
     Integer findByProvinceIdCounts(String provinceId);
     void save(Place place);
     void delete(String id);
+    Place findOne(String id);
+    void update(Place place);
 }

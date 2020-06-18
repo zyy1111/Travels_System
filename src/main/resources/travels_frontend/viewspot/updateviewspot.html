@@ -84,16 +84,16 @@
                 </label>
                 <label>
                     <div class="label-text">景点描述：</div>
-                    <input type="text" v-model="place.placedis">
+                    <input type="text" v-model="place.placedes">
                 </label>
                 <label>
                     <div class="label-text">所属省份：</div>
-                    <select v-model="place.proviceid" name="ofprovince">
+                    <select v-model="place.provinceid" name="ofprovince">
                         <option v-for="pro in provinces"  :value="pro.id" v-text="pro.name"></option>
                     </select>
                 </label>
                 <button type="button" @click="updataPlace" style="background-color: #467aa7;font-size: 20px; ">提 交</button>&emsp;
-                <a :href="'viewspotlist.html?id='+place.proviceid">返回</a>
+                <a :href="'viewspotlist.html?id='+place.provinceid">返回</a>
             </form>
         </div>
         <div id="footer" style="font-size: 15px;text-decoration-color: #666666">
@@ -132,8 +132,8 @@
                 formDtata.append("hottime",this.place.hottime);
                 formDtata.append("hotticket",this.place.hotticket);
                 formDtata.append("dimticket",this.place.dimticket);
-                formDtata.append("placedis",this.place.placedis);
-                formDtata.append("proviceid",this.place.proviceid);
+                formDtata.append("placedes",this.place.placedes);
+                formDtata.append("provinceid",this.place.provinceid);
                 //请求后台
                 axios({
                     method:'post',
@@ -144,11 +144,11 @@
                     },
                 }).then((res)=>{
                     console.log(res.data);
-                    if(res.data.states){
-                        alert(res.data.mag+"点击确定回到景点列表");
-                        location.href="./viewspotlist.html?id="+this.place.proviceid;
+                    if(res.data.state){
+                        alert(res.data.msg+"点击确定回到景点列表");
+                        location.href="./viewspotlist.html?id="+this.place.provinceid;
                     }else {
-                        alert(res.data.mag+"点击确定回到景点列表");
+                        alert(res.data.msg+"点击确定回到景点列表");
                     }
                 });
             },

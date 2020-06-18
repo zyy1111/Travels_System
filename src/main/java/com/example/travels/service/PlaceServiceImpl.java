@@ -50,4 +50,14 @@ public class PlaceServiceImpl implements PlaceService{
 
         placeDAO.delete(id);
     }
+
+    @Override
+    public Place findOne(String id) {
+        return placeDAO.findOne(id);
+    }
+
+    @Override
+    public void update(Place place) {
+        placeDAO.update(place);
+    }
 }

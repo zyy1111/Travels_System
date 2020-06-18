@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("place")
 @CrossOrigin
+@RequestMapping("place")
 public class PlaceController {
 
     @Autowired
@@ -80,5 +80,35 @@ public class PlaceController {
             result.setState(false).setMsg(e.getMessage());
         }
         return result;
+    }
+
+    @GetMapping("findOne")
+    public Place findOne(String id) {
+        return placeService.findOne(id);
+    }
+
+    @PostMapping("update")
+    public Result update(MultipartFile pic, Place place) throws IOException{
+        Result result = new Result();
+        System.out.println(pic);
+        System.out.println(place);
+
+        try{
+            //base64
+            String picpath = Base64Utils.encodeToString(pic.getBytes());
+            place.setPicpath(picpath);
+            //文件上传
+            String extension = FilenameUtils.getExtension(pic.getOriginalFilename());
+            String newFilename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+extension;
+            pic.transferTo(new File(realPath,newFilename));
+            //修改景点信息
+            placeService.update(place);
+            result.setMsg("修改景点信息成功！");
+        }catch (Exception e){
+            e.printStackTrace();
+            result.setState(false).setMsg(e.getMessage());
+        }
+
+        return  result;
     }
 }
