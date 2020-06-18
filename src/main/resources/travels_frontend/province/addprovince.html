@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        form{
+            width:270px;
+        }
+        input{
+            width: 70%;
+            background: #eee;
+        }
+        input:focus{
+            background: #fff;
+        }
+        form{
+            padding: 0 12px 12px;
+        }
+        label{
+            display: block;
+            padding-bottom:12px;
+        }
+        .label-text{
+            width: 22%;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div id="wrap">
+        <div id="header">
+            <div style="float: right;padding-top: 24px">2020/06/07</div>
+            <h1>旅游信息管理系统</h1>
+        </div>
+        <div id="header-bar"></div>
+        <div id="content" style="height: 360px">
+            <img src="../img/timg.jpg" style="float: right;height: 320px">
+            <h2>添加省份</h2>
+            <form action="provincelist.html" method="post">
+                <label style="width: 350px">
+                    <div class="label-text" style="font-size: 16px">省&emsp;份：</div>
+                    <input type="text" style="height: 25px;width: 240px" v-model="province.name">
+                </label>
+                <label  style="width: 350px">
+                    <div class="label-text" style="font-size: 16px">标&emsp;签：</div>
+                    <input type="text"  style="height: 25px;width: 240px" v-model="province.tags">
+                </label>
+                <button type="button" @click="saveProvinceInfo" style="background-color: #467aa7;font-size: 20px;">提 交</button>&emsp;
+                <a href="provincelist.html" style="margin: 25px">返回</a>
+            </form>
+        </div>
+        <div id="footer">
+           Power By springBoot @马志成
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script src="../js/vue.js"></script>
+<script src="../js/axios.min.js"></script>
+<script>
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            province: {
+                name: "",
+                tags: ""
+            }
+        },
+        methods: {
+            saveProvinceInfo() {
+                axios.post("http://localhost:8989/province/save", this.province)
+                    .then((res) => {
+                        console.log(res.data);
+                        if(res.data.state) {
+                            alert(res.data.msg + "Click ok to Province List!");
+                            location.href = './provincelist.html';
+                        } else {
+                            alert(res.data.msg);
+                        }
+                    })
+            }
+        },
+        created() {
+          
+        },
+    })
+   
+
+</script>
