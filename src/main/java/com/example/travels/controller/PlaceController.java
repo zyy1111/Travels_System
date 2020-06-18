@@ -62,7 +62,7 @@ public class PlaceController {
             file.transferTo(new File(realPath,newFilename));
             //place对象的保存
             placeService.save(place);
-            result.setMsg("保存景点信息成功！");
+            result.setMsg("Place has been saved successfully");
         }catch (Exception e){
             result.setState(false).setMsg(e.getMessage());
         }
@@ -71,7 +71,14 @@ public class PlaceController {
 
     @GetMapping("delete")
     public Result delete(String id) {
-        placeService.delete(id);
-        return new Result();
+        Result result = new Result();
+        try {
+            placeService.delete(id);
+            result.setMsg("Place has been deleted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setState(false).setMsg(e.getMessage());
+        }
+        return result;
     }
 }

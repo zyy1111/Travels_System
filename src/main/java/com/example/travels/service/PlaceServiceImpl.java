@@ -42,6 +42,12 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Override
     public void delete(String id) {
+        //先更新对应省份的景点个数
+        Place place = placeDAO.findOne(id);
+        Province province = provinceService.findOne(place.getProvinceid());
+        province.setPlacecounts(province.getPlacecounts() - 1);
+        provinceService.update(province);
 
+        placeDAO.delete(id);
     }
 }
